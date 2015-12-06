@@ -1,4 +1,4 @@
-Boolean search_Key(Btree B, int k) {
+int search_Key(Btree B, int k) {
 
 	int i = 0;
 	while ((i < B->sonNbr) && (k > B->keys[i])) {
