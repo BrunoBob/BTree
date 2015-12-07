@@ -1,4 +1,4 @@
-int search_Key(Btree B, int k) {
+Btree search_Key(Btree B, int k) {
 
 	int i = 0;
 	while ((i < B->sonNbr) && (k > B->keys[i])) {
@@ -7,7 +7,7 @@ int search_Key(Btree B, int k) {
 	if((i <= B->sonNbr) && (k = B-key[i]))
 		return B;
 	else {
-		if(B->leaf) {
+		if(B->sonNbr == 0) {
 			return NULL;
 		}
 		else {
