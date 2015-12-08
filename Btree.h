@@ -1,15 +1,17 @@
-#include  <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <malloc.h>
 
 #define DEGRE 2 // degré d'un B-arbre
 #define NBKEY ((2*DEGRE) + 1)
+#define NBSON ((2*DEGRE) + 2)
 
-typedef enum {0, 1} Boolean;
+typedef int Boolean;
 
 typedef struct noeud {
 	int key[NBKEY];
-	int nbkey;
-	struct noeud *son[NBKEY];
+	int keynb,sonnb;
+	struct noeud *son[NBSON];
 }*B_tree;
 
 B_tree Create_BTree();
