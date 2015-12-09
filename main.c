@@ -4,7 +4,7 @@
 
 int getParameter() {
 	int parameter;
-	scanf("%d", parameter);
+	scanf("%d", &parameter);
 	return parameter;
 }
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	system("clear");
 
 	int choice = 0;
-	Btree B = Create_Btree();
+	B_tree B = Create_BTree();
 
 	while(choice != 8) {
 
@@ -46,31 +46,29 @@ int main(int argc, char *argv[]) {
 			case 1 :
 				printf("Key to add: \n");
 				parameter = getParameter();
-				if(!Is_Empty_Btree(B)) {
-					if(Exist_Key(B, parameter) == True) {
+				/*if(!IsEmpty_Btree(B)) {
+					if(BelongTo_Btree(B, parameter)) {
 						printf("Key %d already in the B-tree.\n", parameter);
 						break;
 					}
-				}
+				}*/
 				B = Add_Key(B, parameter) ;
-				free(parameter);
 				break;
-			case 2 :
+			/*case 2 :
 				printf("Key to delete: \n");
 				parameter = getParameter();
-				if(Is_Empty_Btree(B)) {
+				if(IsEmpty_Btree(B)) {
 					printf("Can't delete because the B-tree is empty.\n");
 				}
-				else if(!Exist_Key(B, parameter) == True) {
+				else if(!BelongTo_Btree(B, parameter)) {
 					printf("Key %d is not in the B-tree.\n", parameter);
 				}
 				else {
 					B = Delete_Key(B, parameter);
 				}
-				free(parameter);
 				break;
 			case 3 :
-				if(Is_Empty_Btree(B)) {
+				if(IsEmpty_Btree(B)) {
 					printf("The B-tree is empty.\n") ;
 				}
 				else {
@@ -80,26 +78,25 @@ int main(int argc, char *argv[]) {
 			case 4 :
 				printf("Key to verify: \n");
 				parameter = getParameter();
-				if(Is_Empty_Btree(B)) {
+				if(IsEmpty_Btree(B)) {
 					printf("The B-tree is empty.\n") ;
 					break;
 				}
-				if(Exist_Key(B, parameter) == True) {
+				if(BelongTo_Btree(B, parameter)) {
 					printf("The key %d is in the B-tree.\n", parameter);
 				}
 				else {
 					printf("The key %d is not in the B-tree.\n", parameter);
 				}
-				free(parameter);
 				break;
 			case 5 :
 				B = Empty_Btree(B);
-				if(Is_Empty_Btree(B)) {
+				if(IsEmpty_Btree(B)) {
 					printf("The B-tree is empty.\n") ;
 				}
 				break;
 			case 6 :
-				if(Is_Empty_Btree(B)) {
+				if(IsEmpty_Btree(B)) {
 					printf("The B-tree is empty.\n") ;
 				}
 				else{
@@ -114,8 +111,11 @@ int main(int argc, char *argv[]) {
 				printf("Name of the file to load: \n");
 				char* filename;
 				filename = getFileName();
-				B = Load_Btree(filename, B);
+				B = Load_Btree(B, filename);
 				free(filename);
+				break;*/
+			case 0 :
+				debugTree(B);
 				break;
 		}
 	}
