@@ -16,22 +16,6 @@ B_tree Create_BTree() {
 }
 
 B_tree Add_Key(B_tree root, int key) {
-	/*if(root->sonnb == 0){
-		root->key[root->keynb] = key; // modif
-		root->keynb++;
-		root = adjust(root,root);
-	}
-	else{
-		B_tree node = root;
-		while(node->sonnb != 0){
-			value = 0 ;
-			while((node->key[value] != -1) && (node->key[value]< key)){
-				value++;
-			}
-			node = node->son[value];
-		}
-	}*/
-
 	B_tree node = root;
 	while(node->sonnb != 0){
 		int value = 0 ;
@@ -54,21 +38,14 @@ B_tree Add_Key(B_tree root, int key) {
 	return root;
 }
 
-
 B_tree split(B_tree root, B_tree node){
-	printf("split start\n");
-	debug(root);
-	debug(node);//Split the value
-	printf("part 1\n");
   B_tree newNode = Create_BTree();
 	B_tree father = getFather(root, node);
   int i;
-	printf("part 2\n");
   for(i = 0 ; i < DEGRE ; i++){
     newNode->key[i] = node->key[i+DEGRE+1];
     node->key[i+DEGRE+1] = -1;
   }
-		printf("part 3\n");
   newNode->keynb = DEGRE;
   node->keynb = DEGRE;
   if(node->sonnb != 0){
@@ -79,19 +56,16 @@ B_tree split(B_tree root, B_tree node){
     newNode->sonnb = DEGRE + 1;
     node->sonnb = DEGRE + 1;
   }
-	printf("part 4\n");
+
 	//Reorder the link between trees
   int value = 0;
 	if(father != node){
-		printf("part 4.1\n");
   	while((father->key[value] != -1) && (father->key[value] < node->key[DEGRE]) ){
     	value++;
   	}
-		printf("part 4.2\n");
   	for(i = (2 * DEGRE) + 1 ; i > value ; i--){
     	father->son[i] = father->son[i-1];
   	}
-		printf("part 4.3\n");
 		for(i = (2 * DEGRE) ; i > value ; i--){
 			father->key[i] = father->key[i-1];
 		}
@@ -106,25 +80,19 @@ B_tree split(B_tree root, B_tree node){
 	father->sonnb++ ;
 	father->key[value] = node->key[DEGRE];
 	node->key[DEGRE] = -1;
-	printf("part 5\n");
   father->keynb ++;
   return root;
 }
 
 B_tree adjust(B_tree root, B_tree node){
   if(node->keynb>2*DEGRE){
-		printf("etape 1\n");
     root = split(root,node);
-		printf("etape 2\n");
     root = adjust(root, getFather(root,node));
   }
   return root;
 }
 
 B_tree getFather(B_tree root, B_tree node){
-	printf("Father start\n");
-	debug(root);
-	debug(node);
   if(root!=node){
     Boolean isFather = 0;
     while (! isFather) {
@@ -148,17 +116,74 @@ B_tree getFather(B_tree root, B_tree node){
       root = root->son[i];
     }
   }
-	printf("Father end\n");
-  return root;
+	return root;
 }
 
 B_tree Delete_Key(B_tree B, int key);
 
-B_tree BelongTo_Btree(B_tree B, int key);
+Boolean BelongTo_Btree(B_tree B, int key){
+	Boolean belong = 0;
+	int i;
+	for(i = 0 ; i < B->keynb ; i++){
+		if(B->son[i] != NULL){
+			belong = BelongTo_Btree(B->son[i], key);
+		}
+		if(belong){
+			break;
+		}
+		if(key == B->key[i]){
+			belong = 1;
+			break;
+		}
+	}
+	if((!belong) && (B->son[i] != NULL)){
+		belong = BelongTo_Btree(B->son[i], key);
+	}
+	return belong;
+}
 
-B_tree Empty_Btree(B_tree B);
+B_tree Empty_Btree(B_tree B){
+	int i;
+	for(i = 0 ; i < B->keynb ; i++){
+		if(B->son[i] != NULL){
+			Empty_Btree(B->son[i]);
+			B->son[i] = NULL;
+		}
+		B->key[i] = -1;
+	}
+	if(B->son[i] != NULL){
+		Empty_Btree(B->son[i]);
+		B->son[i] = NULL;
+	}
+	free(B);
+	B = Create_BTree();
+	return B;
+}
 
-B_tree Load_Btree(B_tree B, char* filename);
+B_tree Load_Btree(B_tree B, char* filename){
+
+	B = Empty_Btree(B);
+	FILE* file = fopen(filename,"r");
+	if(file == NULL){
+		printf("Error opening file %s\n", filename);
+	}
+	else{
+		int i;
+		fscanf(file, "%d", &i);
+		while(!feof(file)){
+			if(BelongTo_Btree(B, i)){
+				printf("%d already in the B-Tree\n", i);
+			}
+			else{
+				printf("%d loaded to the B-Tree\n", i);
+				B = Add_Key(B,i);
+			}
+			fscanf(file, "%d", &i);
+		}
+	}
+	fclose(file);
+	return B;
+}
 
 Boolean IsEmpty_Btree(B_tree B) {
 
@@ -168,25 +193,41 @@ Boolean IsEmpty_Btree(B_tree B) {
 	return 0;
 }
 
-void Display_Btree(B_tree B);
-
-void Save_Btree(B_tree B, char* filename);
-
-void debugTree(B_tree tree){
-	debug(tree);
+void Display_Btree(B_tree B){
 	int i;
-	for(i = 0 ; i< tree->sonnb ; i++){
-		if(tree->son[i] != NULL){
-			debugTree(tree->son[i]);
+	for(i = 0 ; i < B->keynb ; i++){
+		if(B->son[i] != NULL){
+			Display_Btree(B->son[i]);
 		}
+		printf("%d ,", B->key[i]);
+	}
+	if(B->son[i] != NULL){
+		Display_Btree(B->son[i]);
 	}
 }
 
-void debug(B_tree tree){
-	printf("nb keys : %d - keys : ", tree->keynb);
-	int i ;
-	for(i = 0 ; i < tree->keynb ; i++){
-		printf("%d ; ", tree->key[i]);
+void Save_Btree(B_tree B, char* filename){
+	FILE* file = fopen(filename,"w");
+
+	if(file == NULL){
+		printf("error in opening file %s\n", filename);
 	}
-	printf("nb sons : %d \n", tree->sonnb);
+	else{
+		SaveDisplay_Btree(B,file);
+	}
+
+	fclose(file);
+}
+
+void SaveDisplay_Btree(B_tree B, FILE* file){
+	int i;
+	for(i = 0 ; i < B->keynb ; i++){
+		if(B->son[i] != NULL){
+			SaveDisplay_Btree(B->son[i],file);
+		}
+		fprintf(file, "%d ", B->key[i]);
+	}
+	if(B->son[i] != NULL){
+		SaveDisplay_Btree(B->son[i],file);
+	}
 }

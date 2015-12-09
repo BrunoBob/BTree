@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
 
 	while(choice != 8) {
 
+		printf("\n");
 		printf("This program is to be used as a B-tree.\n");
 		printf("Several options are possible.\n");
 		printf("Write the number before ':' to call the related function.\n");
@@ -46,12 +47,10 @@ int main(int argc, char *argv[]) {
 			case 1 :
 				printf("Key to add: \n");
 				parameter = getParameter();
-				/*if(!IsEmpty_Btree(B)) {
-					if(BelongTo_Btree(B, parameter)) {
-						printf("Key %d already in the B-tree.\n", parameter);
-						break;
-					}
-				}*/
+				if(BelongTo_Btree(B, parameter)) {
+					printf("Key %d already in the B-tree.\n", parameter);
+					break;
+				}
 				B = Add_Key(B, parameter) ;
 				break;
 			/*case 2 :
@@ -66,13 +65,14 @@ int main(int argc, char *argv[]) {
 				else {
 					B = Delete_Key(B, parameter);
 				}
-				break;
+				break;*/
 			case 3 :
 				if(IsEmpty_Btree(B)) {
 					printf("The B-tree is empty.\n") ;
 				}
 				else {
 					Display_Btree(B);
+					printf("\n");
 				}
 				break;
 			case 4 :
@@ -113,9 +113,6 @@ int main(int argc, char *argv[]) {
 				filename = getFileName();
 				B = Load_Btree(B, filename);
 				free(filename);
-				break;*/
-			case 0 :
-				debugTree(B);
 				break;
 		}
 	}
