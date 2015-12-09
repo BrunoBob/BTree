@@ -46,8 +46,8 @@ int main(int argc, char *argv[]) {
 			case 1 :
 				printf("Key to add: \n");
 				parameter = getParameter();
-				if(!Is_Empty_Btree(B)) {
-					if(Exist_Key(B, parameter) == True) {
+				if(Is_Empty_Btree(B) == 0) {
+					if(Exist_Key(B, parameter) == 1) {
 						printf("Key %d already in the B-tree.\n", parameter);
 						break;
 					}
@@ -58,10 +58,10 @@ int main(int argc, char *argv[]) {
 			case 2 :
 				printf("Key to delete: \n");
 				parameter = getParameter();
-				if(Is_Empty_Btree(B)) {
+				if(Is_Empty_Btree(B) == 1) {
 					printf("Can't delete because the B-tree is empty.\n");
 				}
-				else if(!Exist_Key(B, parameter) == True) {
+				else if(Exist_Key(B, parameter) == 0) {
 					printf("Key %d is not in the B-tree.\n", parameter);
 				}
 				else {
@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
 				free(parameter);
 				break;
 			case 3 :
-				if(Is_Empty_Btree(B)) {
+				if(Is_Empty_Btree(B) == 1) {
 					printf("The B-tree is empty.\n") ;
 				}
 				else {
@@ -80,11 +80,11 @@ int main(int argc, char *argv[]) {
 			case 4 :
 				printf("Key to verify: \n");
 				parameter = getParameter();
-				if(Is_Empty_Btree(B)) {
+				if(Is_Empty_Btree(B) == 1) {
 					printf("The B-tree is empty.\n") ;
 					break;
 				}
-				if(Exist_Key(B, parameter) == True) {
+				if(Exist_Key(B, parameter) == 1) {
 					printf("The key %d is in the B-tree.\n", parameter);
 				}
 				else {
@@ -94,12 +94,12 @@ int main(int argc, char *argv[]) {
 				break;
 			case 5 :
 				B = Empty_Btree(B);
-				if(Is_Empty_Btree(B)) {
+				if(Is_Empty_Btree(B) == 1) {
 					printf("The B-tree is empty.\n") ;
 				}
 				break;
 			case 6 :
-				if(Is_Empty_Btree(B)) {
+				if(Is_Empty_Btree(B) == 1) {
 					printf("The B-tree is empty.\n") ;
 				}
 				else{
