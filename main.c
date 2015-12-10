@@ -4,7 +4,7 @@
 
 int getParameter() {
 	int parameter;
-	scanf("%d", parameter);
+	scanf("%d", &parameter);
 	return parameter;
 }
 
@@ -20,10 +20,11 @@ int main(int argc, char *argv[]) {
 	system("clear");
 
 	int choice = 0;
-	Btree B = Create_Btree();
+	B_tree B = Create_BTree();
 
 	while(choice != 8) {
 
+		printf("\n");
 		printf("This program is to be used as a B-tree.\n");
 		printf("Several options are possible.\n");
 		printf("Write the number before ':' to call the related function.\n");
@@ -46,60 +47,91 @@ int main(int argc, char *argv[]) {
 			case 1 :
 				printf("Key to add: \n");
 				parameter = getParameter();
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 0) {
 					if(Exist_Key(B, parameter) == 1) {
 						printf("Key %d already in the B-tree.\n", parameter);
 						break;
 					}
+=======
+				if(BelongTo_Btree(B, parameter)) {
+					printf("Key %d already in the B-tree.\n", parameter);
+					break;
+>>>>>>> origin/master
 				}
 				B = Add_Key(B, parameter) ;
-				free(parameter);
 				break;
-			case 2 :
+			/*case 2 :
 				printf("Key to delete: \n");
 				parameter = getParameter();
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 1) {
 					printf("Can't delete because the B-tree is empty.\n");
 				}
 				else if(Exist_Key(B, parameter) == 0) {
+=======
+				if(IsEmpty_Btree(B)) {
+					printf("Can't delete because the B-tree is empty.\n");
+				}
+				else if(!BelongTo_Btree(B, parameter)) {
+>>>>>>> origin/master
 					printf("Key %d is not in the B-tree.\n", parameter);
 				}
 				else {
 					B = Delete_Key(B, parameter);
 				}
-				free(parameter);
-				break;
+				break;*/
 			case 3 :
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 1) {
+=======
+				if(IsEmpty_Btree(B)) {
+>>>>>>> origin/master
 					printf("The B-tree is empty.\n") ;
 				}
 				else {
 					Display_Btree(B);
+					printf("\n");
 				}
 				break;
 			case 4 :
 				printf("Key to verify: \n");
 				parameter = getParameter();
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 1) {
 					printf("The B-tree is empty.\n") ;
 					break;
 				}
 				if(Exist_Key(B, parameter) == 1) {
+=======
+				if(IsEmpty_Btree(B)) {
+					printf("The B-tree is empty.\n") ;
+					break;
+				}
+				if(BelongTo_Btree(B, parameter)) {
+>>>>>>> origin/master
 					printf("The key %d is in the B-tree.\n", parameter);
 				}
 				else {
 					printf("The key %d is not in the B-tree.\n", parameter);
 				}
-				free(parameter);
 				break;
 			case 5 :
 				B = Empty_Btree(B);
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 1) {
+=======
+				if(IsEmpty_Btree(B)) {
+>>>>>>> origin/master
 					printf("The B-tree is empty.\n") ;
 				}
 				break;
 			case 6 :
+<<<<<<< HEAD
 				if(Is_Empty_Btree(B) == 1) {
+=======
+				if(IsEmpty_Btree(B)) {
+>>>>>>> origin/master
 					printf("The B-tree is empty.\n") ;
 				}
 				else{
@@ -114,7 +146,7 @@ int main(int argc, char *argv[]) {
 				printf("Name of the file to load: \n");
 				char* filename;
 				filename = getFileName();
-				B = Load_Btree(filename, B);
+				B = Load_Btree(B, filename);
 				free(filename);
 				break;
 		}

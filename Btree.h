@@ -15,15 +15,28 @@ typedef struct noeud {
 }*B_tree;
 
 B_tree Create_BTree();
+<<<<<<< HEAD
 B_tree Add_Key(B_tree B, int key);
 B_tree Delete_Key(B_tree B, int k);
 B_tree BelongTo_Btree(B_tree B, int key);
 B_tree Empty_Btree(B_tree B);
 B_tree Load_Btree(B_tree B);
 B_tree Search_Key(Btree B, int k);
+=======
+B_tree Add_Key(B_tree root, int key);
+B_tree Delete_Key(B_tree B, int key);
+Boolean BelongTo_Btree(B_tree B, int key);
+B_tree Empty_Btree(B_tree B);
+B_tree Load_Btree(B_tree B, char* filename);
+B_tree adjust(B_tree root, B_tree node);
+B_tree split(B_tree root, B_tree node);
+B_tree getFather(B_tree root, B_tree node);
+void debug(B_tree tree);
+>>>>>>> origin/master
 
 Boolean IsEmpty_Btree(B_tree B);
 Boolean Verif_Key(Btree B, int k);
 
 void Display_Btree(B_tree B);
-void Save_Btree(B_tree B);
+void SaveDisplay_Btree(B_tree B, FILE* file);
+void Save_Btree(B_tree B, char* filename);
