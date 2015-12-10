@@ -113,7 +113,56 @@ B_tree getFather(B_tree root, B_tree node){
   return root;
 }
 
-B_tree Delete_Key(B_tree B, int key);
+// Pas fini
+B_tree Delete_Key(Btree B, int k) {
+
+	Btree Bt = Create_Btree();
+	Btree Bst = Create_Btree();
+
+	if(!verif_Key(B, k)) {
+		printf("La clef %d n'existe pas, et ne peut donc pas être supprimée.\n", k);
+		return B;
+	}
+
+	Bt = search_Key(B, k);
+	int i = 0;
+
+	if(Bt->leaf = 1) {
+		if(Bt->keyNbr <= DEGRE) {
+
+			//A FAIRE
+		}
+		else {
+			while(Bt->keys[i] != k) {
+				i++;
+			}
+			while(i <= keyNbr) {
+				Bt->keys[i] = Bt->keys[i + 1];
+			}
+			Bt->keys[keyNbr - 1] = NULL;
+			Bt->keyNbr--;
+		}
+	}
+	else {
+		while(Bt->keys[i] != k) {
+			i++;
+		}
+		if(Bt->sons[i + 1] != NULL) {
+			Bst = Bt->sons[i + 1];
+			while(Bst->sons[0] != NULL) {
+				Bst = Bst->sons[0];
+			}
+			Bt->keys[i] = Bst->keys[0];
+		}
+		else {
+			Bts = Bt->sons[i];
+			while(Bst->sons[(B->sonNbr -1)] != NULL) {
+				Bst = Bst->sons[(B->sonNbr -1)];
+			}
+			Bt->keys[i] = Bst->keys[(B->keyNbr - 1)];
+		}
+	}
+}
 
 B_tree BelongTo_Btree(B_tree B, int key);
 
@@ -121,9 +170,34 @@ B_tree Empty_Btree(B_tree B);
 
 B_tree Load_Btree(B_tree B);
 
+B_tree Search_Key(Btree B, int k) {
+
+	int i = 0;
+	while ((i < B->sonNbr) && (k > B->keys[i])) {
+		i++;
+	}
+	if((i <= B->sonNbr) && (k = B-key[i]))
+		return B;
+	else {
+		if(B->sonNbr == 0) {
+			return NULL;
+		}
+		else {
+			return search_Key(B->sons[i], k);
+		}
+	}
+}
+
 Boolean IsEmpty_Btree(B_tree B) {
 
 	if(B->keynb == 0) {
+		return 1;
+	}
+	return 0;
+}
+
+Boolean Verif_Key(Btree B, int k) {
+	if(!(search_Key(B, k) = NULL) {
 		return 1;
 	}
 	return 0;

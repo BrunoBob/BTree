@@ -16,12 +16,14 @@ typedef struct noeud {
 
 B_tree Create_BTree();
 B_tree Add_Key(B_tree B, int key);
-B_tree Delete_Key(B_tree B, int key);
+B_tree Delete_Key(B_tree B, int k);
 B_tree BelongTo_Btree(B_tree B, int key);
 B_tree Empty_Btree(B_tree B);
 B_tree Load_Btree(B_tree B);
+B_tree Search_Key(Btree B, int k);
 
 Boolean IsEmpty_Btree(B_tree B);
+Boolean Verif_Key(Btree B, int k);
 
 void Display_Btree(B_tree B);
 void Save_Btree(B_tree B);
