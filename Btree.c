@@ -260,7 +260,6 @@ Boolean IsEmpty_Btree(B_tree B) {
 	return 0;
 }
 
-<<<<<<< HEAD
 Boolean Verif_Key(Btree B, int k) {
 	if(!(search_Key(B, k) = NULL) {
 		return 1;
@@ -268,8 +267,6 @@ Boolean Verif_Key(Btree B, int k) {
 	return 0;
 }
 
-void Display_Btree(B_tree B);
-=======
 void Display_Btree(B_tree B){
 	int i;
 	for(i = 0 ; i < B->keynb ; i++){
@@ -292,7 +289,6 @@ void Save_Btree(B_tree B, char* filename){
 	else{
 		SaveDisplay_Btree(B,file);
 	}
->>>>>>> origin/master
 
 	fclose(file);
 }
